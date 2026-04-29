@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Care Elderly Assessment Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        h1 { text-align: center; }
+        .section { margin: 20px 0; border: 1px solid #ccc; padding: 15px; border-radius: 5px; }
+        label { display: inline-block; width: 280px; vertical-align: top; }
+        input[type="text"], input[type="number"], input[type="date"], select, textarea { 
+            padding: 6px; margin: 5px 0; width: 65%; 
+        }
+        .fixed { font-weight: bold; }
+        .radio-group label { width: auto; margin-right: 15px; }
+        .row { display: flex; align-items: center; margin: 8px 0; flex-wrap: wrap; }
+        button { padding: 10px 15px; margin: 5px; font-size: 14px; }
+        #generatedText { 
+            width: 100%; height: 400px; font-family: monospace; 
+            white-space: pre-wrap; background: #f9f9f9; padding: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Home Care Elderly Assessment Form</h1>
+
+    <form id="assessmentForm">
+        <div class="section">
+            <p><strong>Name:</strong> <input type="text" id="name"></p>
+            <p><strong>Visit date:</strong> <input type="date" id="visit_date"></p>
+
+            <p><strong>Home visit for:</strong>
+                <label><input type="radio" name="visit_type" value="Intake"> Intake</label>
+                <label><input type="radio" name="visit_type" value="ICP"> ICP</label>
+                <label><input type="radio" name="visit_type" value="Review"> Review</label>
+            </p>
+
+            <p><strong>Case manager:</strong> <input type="text" id="case_manager"></p>
+            <p><strong>Arrive client's home:</strong> <input type="text" id="arrive_with"></p>
+            
+            <div class="row">
+                <strong>Present during home visit: client,</strong>
+                <input type="text" id="present" placeholder="e.g. Mother" style="width:220px; margin-left:10px;">
+                <span id="present_display" style="margin-left:10px; font-weight:bold;"></span>
+            </div>
+
+            <p><strong>Referral:</strong> <input type="text" id="referral"></p>
+        </div>
+
+        <div class="section">
+            <h2>Background</h2>
+            <p><strong>Past medical history:</strong> <textarea id="pmh" rows="3" style="width:100%;"></textarea></p>
+            <p><strong>Past surgery:</strong> <textarea id="past_surgery" rows="2" style="width:100%;"></textarea></p>
+            
+            <div class="row">
+                <strong>Falls in previous year:</strong>
+                <input type="number" id="falls" min="0" value="0" style="width:80px; margin-left:10px;">
+            </div>
+            <p><strong>Cause of fall(s):</strong> <input type="text" id="fall_cause" style="width:80%;"></p>
+            
+            <div class="row">
+                <strong>Hospitalization in previous year:</strong>
+                <input type="number" id="hospitalization" min="0" value="0" style="width:80px; margin-left:10px;">
+            </div>
+            <p><strong>Cause of hospitalization:</strong> <input type="text" id="hosp_cause" style="width:80%;"></p>
+        </div>
+
+        <div class="section">
+            <h2>Social History</h2>
+            <p><strong>Client lived</strong> <input type="text" id="lived" style="width:70%;"></p>
+            <p><strong>Main caregiver:</strong> <input type="text" id="main_caregiver"></p>
+            
+            <p><strong>Safety link installed:</strong>
+                <label><input type="radio" name="safety" value="Yes"> Yes</label>
+                <label><input type="radio" name="safety" value="No"> No</label>
+            </p>
+            
+            <p><strong>Leisure activity / exercise:</strong> <textarea id="leisure" rows="3" style="width:100%;"></textarea></p>
+        </div>
+
+        <div class="section">
+            <h2>Environment</h2>
+            <p><strong>General:</strong> <textarea id="general_env" rows="2" style="width:100%;"></textarea></p>
+            
+            <p><strong>Toilet:</strong> Sitting type, HR: 
+                <label><input type="radio" name="toilet_hr" value="Installed"> Installed</label>
+                <label><input type="radio" name="toilet_hr" value="Not installed"> Not installed</label>
+            </p>
+            
+            <p><strong>Bathing:</strong> cubicle/ bathtub, HR: 
+                <label><input type="radio" name="bathing_hr" value="Installed"> Installed</label>
+                <label><input type="radio" name="bathing_hr" value="Not installed"> Not installed</label>
+            </p>
+            
+            <p><strong>Bed height:</strong> 
+                <label><input type="radio" name="bed_height" value="appropriate"> appropriate</label>
+                <label><input type="radio" name="bed_height" value="too high"> too high</label>
+                <label><input type="radio" name="bed_height" value="too low"> too low</label>
+            </p>
+            
+            <p><strong>Aids available:</strong> <textarea id="aids" rows="2" style="width:100%;"></textarea></p>
+        </div>
+
+        <div class="section">
+            <h2>Present</h2>
+            <p><strong>Mobility:</strong> walked <input type="text" id="mobility"></p>
+            
+            <p><strong>ADL:</strong> 
+                <label><input type="radio" name="adl" value="Independent"> Independent</label>
+                <label><input type="radio" name="adl" value="Assisted"> Assisted</label>
+                <label><input type="radio" name="adl" value="Dependent"> Dependent</label>
+            </p>
+            
+            <p><strong>IADL:</strong> 
+                <label><input type="radio" name="iadl" value="Independent"> Independent</label>
+                <label><input type="radio" name="iadl" value="Assisted"> Assisted</label>
+                <label><input type="radio" name="iadl" value="Dependent"> Dependent</label>
+            </p>
+            
+            <p><strong>S/E:</strong> <textarea id="se" rows="2" style="width:100%;"></textarea></p>
+        </div>
+
+        <div class="section">
+            <h2>O/E</h2>
+            <p class="fixed">Afebrile: Yes, BP/PR stable, SOB: Nil, Room air</p>
+            
+            <h3>Communication</h3>
+            <p><strong>Visual:</strong> 
+                <label><input type="radio" name="visual" value="NAD"> NAD</label>
+                <label><input type="radio" name="visual" value="impaired"> impaired</label>
+            </p>
+            <p><strong>Auditory:</strong> 
+                <label><input type="radio" name="auditory" value="NAD"> NAD</label>
+                <label><input type="radio" name="auditory" value="impaired"> impaired</label>
+            </p>
+            <p><strong>Speech:</strong> 
+                <label><input type="radio" name="speech" value="NAD"> NAD</label>
+                <label><input type="radio" name="speech" value="impaired"> impaired</label>
+            </p>
+            <p><strong>Orientation:</strong> <input type="text" id="orientation" style="width:70%;"></p>
+
+            <p><strong>Chest:</strong> <textarea id="chest" rows="2" style="width:100%;"></textarea></p>
+            <p><strong>Observation:</strong> <textarea id="observation" rows="2" style="width:100%;"></textarea></p>
+            <p><strong>Palpation:</strong> <textarea id="palpation" rows="2" style="width:100%;"></textarea></p>
+            <p><strong>AROM of limbs:</strong> <input type="text" id="arom" style="width:80%;"></p>
+            
+            <p><strong>Muscle power:</strong></p>
+            <p>UL (R | L): <input type="text" id="ul_r" style="width:80px;"> | <input type="text" id="ul_l" style="width:80px;"></p>
+            <p>LL (R | L): <input type="text" id="ll_r" style="width:80px;"> | <input type="text" id="ll_l" style="width:80px;"></p>
+        </div>
+
+        <div class="section">
+            <h2>Functional mobility</h2>
+            <p><strong>Bed mobility:</strong> 
+                <label><input type="radio" name="bed_mob" value="Independent"> Independent</label>
+                <label><input type="radio" name="bed_mob" value="assisted"> assisted</label>
+                <label><input type="radio" name="bed_mob" value="dependent"> dependent</label>
+            </p>
+            
+            <p><strong>Transfer Lying <-> Sitting:</strong> 
+                <label><input type="radio" name="lying_sitting" value="Independent"> Independent</label>
+                <label><input type="radio" name="lying_sitting" value="assisted"> assisted</label>
+                <label><input type="radio" name="lying_sitting" value="dependent"> dependent</label>
+            </p>
+            
+            <p><strong>Transfer Sitting <->Standing:</strong> 
+                <label><input type="radio" name="sitting_standing" value="Independent"> Independent</label>
+                <label><input type="radio" name="sitting_standing" value="assisted"> assisted</label>
+                <label><input type="radio" name="sitting_standing" value="dependent"> dependent</label>
+            </p>
+            
+            <p><strong>Transfer Bed <-> Chair:</strong> 
+                <label><input type="radio" name="bed_chair" value="Independent"> Independent</label>
+                <label><input type="radio" name="bed_chair" value="assisted"> assisted</label>
+                <label><input type="radio" name="bed_chair" value="dependent"> dependent</label>
+            </p>
+            
+            <p><strong>Sitting balance:</strong> supported/unsupported 
+                <label><input type="radio" name="sitting_bal" value="Good"> Good</label>
+                <label><input type="radio" name="sitting_bal" value="Fair"> Fair</label>
+                <label><input type="radio" name="sitting_bal" value="Poor"> Poor</label>
+            </p>
+            
+            <p><strong>Standing balance:</strong> supported/unsupported 
+                <label><input type="radio" name="standing_bal" value="Good"> Good</label>
+                <label><input type="radio" name="standing_bal" value="Fair"> Fair</label>
+                <label><input type="radio" name="standing_bal" value="Poor"> Poor</label>
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Mobility</h2>
+            <p><strong>Indoor:</strong> <input type="text" id="indoor" style="width:80%;"></p>
+            <p><strong>Outdoor:</strong> <input type="text" id="outdoor" style="width:80%;"></p>
+            <p><strong>Remark:</strong> <textarea id="remark" rows="3" style="width:100%;"></textarea></p>
+        </div>
+
+        <div class="section">
+            <p><strong>EMS:</strong> <input type="number" id="ems" style="width:80px;"> / 20</p>
+            <p><strong>BBS:</strong> <input type="number" id="bbs" style="width:80px;"> / 56</p>
+            <p><strong>MFAC:</strong> <input type="text" id="mfac"></p>
+            <p><strong>TUGT:</strong> <input type="number" id="tugt" style="width:80px;"> s, walking aid: <input type="text" id="walking_aid"></p>
+        </div>
+
+        <div class="section">
+            <h2>Impression</h2>
+            <textarea id="impression" rows="5" style="width:100%;"></textarea>
+        </div>
+
+        <div class="section">
+            <h2>Management</h2>
+            <textarea id="management" rows="5" style="width:100%;"></textarea>
+        </div>
+
+        <div class="section">
+            <h2>Aim</h2>
+            <textarea id="aim" rows="3" style="width:100%;"></textarea>
+        </div>
+
+        <div class="section">
+            <label><input type="checkbox" id="carer_edu"> Carer education done</label>
+        </div>
+
+<!-- Continue with all other sections from your original file... -->
+
+        <!-- Action Buttons -->
+        <div style="text-align:center; margin:30px 0;">
+            <button type="button" onclick="saveDraftJSON()">💾 Save as JSON</button>
+            <button type="button" onclick="loadDraftJSON()">📂 Load JSON</button>
+            <button type="button" onclick="generateText()">📄 Generate Text Report</button>
+            <button type="button" onclick="clearForm()">🗑️ Clear Form</button>
+        </div>
+
+        <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
+
+        <div id="status" class="status" style="display:none; text-align:center;"></div>
+
+        <div id="textOutput" style="display:none; margin-top:30px;">
+            <h2>Generated Text Report</h2>
+            <textarea id="generatedText" readonly></textarea><br>
+            <button type="button" onclick="copyText()">📋 Copy to Clipboard</button>
+            <button type="button" onclick="hideOutput()">Close</button>
+        </div>
+    </form>
+
+<script>
+    // Auto-update present display
+    const presentInput = document.getElementById('present');
+    const presentDisplay = document.getElementById('present_display');
+    presentInput.addEventListener('input', () => {
+        presentDisplay.textContent = presentInput.value.trim() ? presentInput.value.trim() : '';
+    });
+
+    // ====================== SAVE AS JSON ======================
+    function saveDraftJSON() {
+        const formData = {};
+
+        document.querySelectorAll('input, textarea, select').forEach(el => {
+            if (el.type === 'radio') {
+                if (el.checked) formData[el.name] = el.value;
+            } else if (el.type === 'checkbox') {
+                formData[el.id] = el.checked;
+            } else {
+                formData[el.id] = el.value;
+            }
+        });
+
+        formData._savedAt = new Date().toISOString();
+        formData._version = "2.0";
+
+        // === NEW FILENAME FORMAT: (Client Name) (Visit Date) ===
+        let clientName = document.getElementById('name').value.trim() || "Unnamed_Client";
+        let visitDate = document.getElementById('visit_date').value || new Date().toISOString().slice(0,10);
+        
+        // Sanitize filename (remove invalid characters)
+        const sanitizedName = clientName.replace(/[^a-zA-Z0-9\s]/g, '').trim();
+        const filename = `${sanitizedName} (${visitDate}).json`;
+
+        const blob = new Blob([JSON.stringify(formData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showStatus(`✅ Saved as: <strong>${filename}</strong>`, 'green');
+    }
+
+    // Load function remains the same
+    function loadDraftJSON() {
+        document.getElementById('jsonFileInput').click();
+    }
+
+    document.getElementById('jsonFileInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            try {
+                const formData = JSON.parse(event.target.result);
+                document.getElementById('assessmentForm').reset();
+
+                Object.keys(formData).forEach(key => {
+                    if (key.startsWith('_')) return;
+
+                    const el = document.getElementById(key);
+                    if (el) {
+                        if (el.type === 'checkbox') el.checked = formData[key];
+                        else el.value = formData[key] || '';
+                    } else {
+                        const radio = document.querySelector(`input[name="${key}"][value="${formData[key]}"]`);
+                        if (radio) radio.checked = true;
+                    }
+                });
+
+                presentDisplay.textContent = formData.present ? formData.present : '';
+                showStatus(`✅ Loaded: ${file.name}`, 'green');
+            } catch (err) {
+                showStatus('❌ Invalid JSON file', 'red');
+            }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+    });
+
+    function showStatus(message, color) {
+        const statusEl = document.getElementById('status');
+        statusEl.innerHTML = message;
+        statusEl.style.color = color;
+        statusEl.style.backgroundColor = color === 'green' ? '#d4edda' : '#f8d7da';
+        statusEl.style.display = 'block';
+        setTimeout(() => { statusEl.style.display = 'none'; }, 5000);
+    }
+
+        // Generate Text Report
+        function generateText() {
+            let text = "HOME CARE ELDERLY ASSESSMENT FORM\n";
+            text += "====================================\n\n";
+            
+            text += `Name: ${document.getElementById('name').value}\n`;
+            text += `Visit date: ${document.getElementById('visit_date').value}\n`;
+            
+            const visitType = document.querySelector('input[name="visit_type"]:checked');
+            text += `Home visit for: ${visitType ? visitType.value : ''}\n`;
+            
+            text += `Case manager: ${document.getElementById('case_manager').value}\n`;
+            text += `Arrive client's home with: ${document.getElementById('arrive_with').value}\n`;
+            text += `Present during home visit: client, ${document.getElementById('present').value}\n`;
+            text += `Referral: ${document.getElementById('referral').value}\n\n`;
+
+            text += "BACKGROUND\n";
+            text += `Past medical history: ${document.getElementById('pmh').value}\n`;
+            text += `Past surgery: ${document.getElementById('past_surgery').value}\n`;
+            text += `Falls in previous year: ${document.getElementById('falls').value}\n`;
+            text += `Cause of fall(s): ${document.getElementById('fall_cause').value}\n`;
+            text += `Hospitalization last year: ${document.getElementById('hospitalization').value}\n`;
+            text += `Cause of hospitalization: ${document.getElementById('hosp_cause').value}\n\n`;
+
+            text += "SOCIAL HISTORY\n";
+            text += `Client lived	 ${document.getElementById('lived').value}\n`;
+            text += `Main caregiver: ${document.getElementById('main_caregiver').value}\n`;
+            const safety = document.querySelector('input[name="safety"]:checked');
+            text += `Safety link installed: ${safety ? safety.value : ''}\n`;
+            text += `Leisure activity / exercise: ${document.getElementById('leisure').value}\n\n`;
+
+            // Add more sections as needed (Environment, Present, O/E, etc.)
+            text += "ENVIRONMENT\n";
+            text += `General: ${document.getElementById('general_env').value}\n`;
+            const toilet = document.querySelector('input[name="toilet_hr"]:checked');
+            text += `Toilet: Sitting type, HR: ${toilet ? toilet.value : ''}\n`;
+            const bathing = document.querySelector('input[name="bathing_hr"]:checked');
+            text += `Bathing: cubicle, HR: ${bathing ? bathing.value : ''}\n`;
+            const bed = document.querySelector('input[name="bed_height"]:checked');
+            text += `Bed height: ${bed ? bed.value : ''}\n`;
+            text += `Aids available: ${document.getElementById('aids').value}\n\n`;
+
+            text += "PRESENT\n";
+            text += `Mobility: walked ${document.getElementById('mobility').value}\n`;
+            const adl = document.querySelector('input[name="adl"]:checked');
+            text += `ADL: ${adl ? adl.value : ''}\n`;
+            const iadl = document.querySelector('input[name="iadl"]:checked');
+            text += `IADL: ${iadl ? iadl.value : ''}\n`;
+
+            text += `S/E: ${document.getElementById('se').value}\n\n`;
+
+            text += "O/E\n";
+            text += "Afebrile: Yes, BP/PR stable, SOB: Nil, RA\n";
+            text += "Communication\n";
+            const visual = document.querySelector('input[name="visual"]:checked');
+            text += `Visual: ${visual ? visual.value : ''}\n`;
+            const auditory = document.querySelector('input[name="auditory"]:checked');
+            text += `Auditory: ${auditory ? auditory.value : ''}\n`;
+            const speech = document.querySelector('input[name="speech"]:checked');
+            text += `Speech: ${speech ? speech.value : ''}\n`;
+            text += `Orientation: ${document.getElementById('orientation').value}\n`;
+
+            text += `Chest: ${document.getElementById('chest').value}\n`;
+            text += `Observation: ${document.getElementById('observation').value}\n`;
+            text += `Palpation: ${document.getElementById('palpation').value}\n`;
+            text += `AROM of limbs: ${document.getElementById('arom').value}\n`;
+            text += `Muscle power UL (R | L): ${document.getElementById('ul_r').value} | ${document.getElementById('ul_l').value}\n`;
+            text += `Muscle power LL (R | L): ${document.getElementById('ll_r').value} | ${document.getElementById('ll_l').value}\n\n`;
+text += "FUNCTIONAL MOBILITY\n";
+    
+    const bedMob = document.querySelector('input[name="bed_mob"]:checked');
+    text += `Bed mobility: ${bedMob ? bedMob.value : ''}\n`;
+    
+    const lyingSitting = document.querySelector('input[name="lying_sitting"]:checked');
+    text += `Transfer Lying <-> Sitting: ${lyingSitting ? lyingSitting.value : ''}\n`;
+    
+    const sittingStanding = document.querySelector('input[name="sitting_standing"]:checked');
+    text += `Transfer Sitting <-> Standing: ${sittingStanding ? sittingStanding.value : ''}\n`;
+    
+    const bedChair = document.querySelector('input[name="bed_chair"]:checked');
+    text += `Transfer Bed <-> Chair: ${bedChair ? bedChair.value : ''}\n`;
+    
+    const sittingBal = document.querySelector('input[name="sitting_bal"]:checked');
+    text += `Sitting balance: supported/unsupported, ${sittingBal ? sittingBal.value : ''}\n`;
+    
+    const standingBal = document.querySelector('input[name="standing_bal"]:checked');
+    text += `Standing balance: supported/unsupported, ${standingBal ? standingBal.value : ''}\n\n`;
+
+    text += "MOBILITY\n";
+    text += `Indoor: ${document.getElementById('indoor').value}\n`;
+    text += `Outdoor: ${document.getElementById('outdoor').value}\n`;
+    text += `Remark: ${document.getElementById('remark').value}\n\n`;
+
+    text += "ASSESSMENT SCORES\n";
+    text += `EMS: ${document.getElementById('ems').value} / 20\n`;
+    text += `BBS: ${document.getElementById('bbs').value} / 56\n`;
+    text += `MFAC: ${document.getElementById('mfac').value}\n`;
+    text += `TUGT: ${document.getElementById('tugt').value} s, walking aid: ${document.getElementById('walking_aid').value}\n\n`;
+
+            text += `\nImpression:\n${document.getElementById('impression').value}\n\n`;
+            text += `Management:\n${document.getElementById('management').value}\n\n`;
+            text += `Aim:\n${document.getElementById('aim').value}\n\n`;
+            text += `Carer education done: ${document.getElementById('carer_edu').checked ? 'Yes' : 'No'}\n`;
+
+            document.getElementById('generatedText').value = text;
+            document.getElementById('textOutput').style.display = 'block';
+        }
+
+        function copyText() {
+            const textarea = document.getElementById('generatedText');
+            textarea.select();
+            document.execCommand('copy');
+            alert('Copied to clipboard!');
+        }
+
+        function hideOutput() {
+            document.getElementById('textOutput').style.display = 'none';
+        }
+
+        function clearForm() {
+            if (confirm('Clear all fields?')) {
+                document.getElementById('assessmentForm').reset();
+                presentDisplay.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
